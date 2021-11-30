@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>Doraemon</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon" />
+    <style type="text/css">
+        *{
+            color:navy;
+            font-size: 20px;
+            font-weight: bold;
+            font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", "TW Kai";
+        }
+        img {
+            width: 300px;
+            height: 300px;
+        }
+        #doraemon{
+            display: block;
+            width: 300px;
+            text-align: center;
+        }
+    </style>
+    <script>
+        var prop = ["哆啦A夢", "任意門", "時光機", "竹蜻蜓", "時光布", "記憶麵包", "縮小燈", "翻譯蒟蒻", "如果電話亭", "穿透環", "更衣照相機"];
+        function start(){
+            setInterval(function(){set(Math.floor(Math.random() * 11))}, 1000);
+        }
+        function set(value){
+            if(value == 10)
+                document.getElementById("picture").setAttribute("src", value + ".png");
+            else
+            document.getElementById("picture").setAttribute("src", "0" + value + ".png");
+            document.getElementById("doraemon").innerHTML = prop[value];
+        }
+        window.addEventListener("load", start, false);
+    </script>
+</head>
+
+<body>
+    <div>
+        <audio controls>
+            <source src="doraemon-bg.mp3" type="audio/mpeg">
+            Your browser does not support the audio element.
+        </audio>
+    </div>
+    <img id = "picture" src = "00.png" alt = "00">
+    <div id = "doraemon">哆啦A夢</div>
+</body>
+
+</html>
