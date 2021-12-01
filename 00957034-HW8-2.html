@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<title>Pin Pictures</title>
+	<style type="text/CSS">
+		div.nav {
+			border: 1px solid skyBlue;
+			margin-left: 3px;
+			padding: 3px;
+			float: left;
+		}
+		input, p, li {
+			font-family: Helvetica, "Microsoft YaHei", "LiHei Pro", "TW-Kai";
+		}
+		li {
+			font-size: 12px;
+		}
+		img.picture {
+			position: absolute;
+		}	
+	</style>
+	<script type="text/javascript">
+		var number, position_x, position_y, currentNode
+		var count = 1, count2 = 1
+		function start(){
+			currentNode = document.getElementById("image");
+			set();
+			document.getElementById("addButton").addEventListener("click", store, false);
+			document.getElementById("removeAllButton").addEventListener("click", clear_all, false);
+		}
+		function set(){			
+			tags = []; 
+            var length = localStorage.length; 
+			console.log(length);
+            for (var i = 0; i < length; ++i) {
+                tags[i] = localStorage.key(i);
+            } 
+			tags.sort();
+			for(var tag in tags){
+				var newNode = document.createElement("img");
+				if(JSON.parse(localStorage.getItem(tags[tag])).picture == "10.png")
+					newNode.setAttribute("src", JSON.parse(localStorage.getItem(tags[tag])).picture);
+				else
+					newNode.setAttribute("src", "0" + JSON.parse(localStorage.getItem(tags[tag])).picture);
+				newNode.setAttribute("class", "picture");
+				newNode.setAttribute("style", "top:" + JSON.parse(localStorage.getItem(tags[tag])).position_x + ";" +"left:" + JSON.parse(localStorage.getItem(tags[tag])).position_y + ";" + "z-index:" + count2 + ";");
+				count2++;
+				currentNode.appendChild(newNode);				
+			}
+		}
+		function store(){
+			number = document.getElementById("pic").value;
+			position_x = document.getElementById("x").value;
+			position_y = document.getElementById("y").value;
+			text = {"picture": number + ".png", "position_x": position_x + "px", "position_y": position_y + "px"};
+            var json_change = JSON.stringify(text);
+			var date = new Date().getTime();
+			localStorage.setItem(date, json_change);
+			set();
+		}
+		function clear_all(){
+			count = 1;
+			localStorage.clear();
+			set();
+		}
+		window.addEventListener("load", start, false);
+	</script>
+</head>
+
+<body>
+	<div id = "image"></div>
+	<img src="blackboard.jpg" height="600" width="800" style="float:left; z-index:-1;"/>
+	<img id="img-0" class="picture" style="top: 50px; left: 50px; z-index:0;" src="00.png" draggable="true" />
+		
+	<div id="nav" class="nav">
+		<form action="#">
+			<p>
+				<label>要放哪個道具圖片(請輸入編號):
+					<input type="number" id="pic" min="1" max="10" step="1" value="1" />
+				</label><br />
+				<label>圖片X座標:
+					<input type="number" id="x" min="40" max="600" step="1" value="40" />
+				</label><br />
+				<label>圖片Y座標:
+					<input type="number" id="y" min="40" max="400" step="1" value="100" />
+				</label>
+			</p>
+			<p>
+				<input type="button" value="新增圖片" id="addButton">
+				<input type="button" value="移除所有圖片" id="removeAllButton">
+			</p>
+		</form>
+		<ul>
+			<li>[01]任意門</li>
+			<li>[02]時光機</li>
+			<li>[03]竹蜻蜓</li>
+			<li>[04]時光布</li>
+			<li>[05]記憶麵包</li>
+			<li>[06]縮小燈</li>
+			<li>[07]翻譯蒟蒻</li>
+			<li>[08]如果電話亭</li>
+			<li>[09]穿透環</li>
+			<li>[10]更衣照相機</li>
+		</ul>
+	</div>
+</body>
+
+</html>
